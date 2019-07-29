@@ -47,6 +47,20 @@ function create (delay, fn) {
     return create(0, 'only')(description, testFn)
   }
 
+  queueTest.styles = function (styles) {
+    if (!(!Array.isArray(styles) || typeof styles !== 'string')) {
+      throw new Error('style should be a string or and array')
+    }
+    const head = document.head
+    if (typeof styles === 'string') {
+      const link = document.createElement('link')
+      link.type = 'text/css'
+      link.rel = 'stylesheet'
+      link.href = styles
+      head.append(link)
+    }
+  }
+
   return queueTest
 
   function createTestHarness (t, element) {
