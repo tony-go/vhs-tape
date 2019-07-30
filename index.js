@@ -47,18 +47,18 @@ function create (delay, fn) {
     return create(0, 'only')(description, testFn)
   }
 
-  queueTest.styles = function (styles) {
-    if (!(!Array.isArray(styles) || typeof styles !== 'string')) {
+  queueTest.setStyle = function (path) {
+    /* if (!(!Array.isArray(styles) || typeof styles !== 'string')) {
       throw new Error('style should be a string or and array')
-    }
+    }*/
     const head = document.head
-    if (typeof styles === 'string') {
-      const link = document.createElement('link')
-      link.type = 'text/css'
-      link.rel = 'stylesheet'
-      link.href = styles
-      head.append(link)
-    }
+    const link = createElement('link')
+    link.type = 'text/css'
+    link.rel = 'stylesheet'
+    link.href = path
+    head.append(link)
+
+    console.log(document.getElementsByTagName('html')[0].innerHTML)
   }
 
   return queueTest
@@ -100,6 +100,10 @@ function create (delay, fn) {
           await t.delay()
           el.dispatchEvent(new window.KeyboardEvent(event || 'keydown', { key: c }))
         }
+        return t.delay()
+      },
+      debug () {
+        console.log(document.getElementsByTagName('html')[0].innerHTML)
         return t.delay()
       }
     })

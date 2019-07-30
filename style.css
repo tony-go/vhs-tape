@@ -1,0 +1,8 @@
+p {
+    font-family: sans-serif;
+    color: red;
+    visibility: visible;
+}
+p:hover {
+    visibility: hidden;
+}
