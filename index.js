@@ -1,11 +1,27 @@
 const tape = require('tape')
 const onload = require('fast-on-load')
+const pck = require('./package')
 
 const createElement = document.createElement.bind(document)
-
 const testBody = createElement('div')
 testBody.id = 'vhs-test-body'
 document.body.appendChild(testBody)
+
+let count = 0
+
+if (pck.vhs) {
+  const { style } = pck.vhs
+  if (style) {
+    const head = document.head
+    const link = createElement('link')
+    link.type = 'text/css'
+    link.rel = 'stylesheet'
+    link.href = style
+    head.append(link)
+  }
+  count++
+  console.log(count)
+}
 
 function create (delay, fn) {
   if (!delay) delay = Number(process.env.VHS_DELAY) || 0
@@ -45,20 +61,6 @@ function create (delay, fn) {
 
   queueTest.only = function (description, testFn) {
     return create(0, 'only')(description, testFn)
-  }
-
-  queueTest.setStyle = function (path) {
-    /* if (!(!Array.isArray(styles) || typeof styles !== 'string')) {
-      throw new Error('style should be a string or and array')
-    }*/
-    const head = document.head
-    const link = createElement('link')
-    link.type = 'text/css'
-    link.rel = 'stylesheet'
-    link.href = path
-    head.append(link)
-
-    console.log(document.getElementsByTagName('html')[0].innerHTML)
   }
 
   return queueTest

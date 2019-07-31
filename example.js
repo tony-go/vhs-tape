@@ -22,8 +22,6 @@ vhs('A simple mounting of some html async/await', async t => {
   t.equal(exampleComponent.element.querySelector('.counter').innerText, 'Counter: 3')
 })
 
-vhs.setStyle('./style.css')
-
 vhs('A simple mounting of some html', t => {
   const exampleComponent = new Simple('This should be loaded')
 
